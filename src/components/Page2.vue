@@ -15,9 +15,16 @@
   </div>
 
   <div>
-    <button @click="increase(4)">+4</button>
+    <button @click="increase(4, $event)">+4</button>
     <span>{{ counter }}</span>
-    <button v-on:click="decrease(3)">-3</button>
+    <button v-on:click="decrease(3, $event)">-3</button>
+  </div>
+
+  <div>
+    <button @click="increase(4, $event), inform()">+4</button>
+    <span>{{ counter }}</span>
+    <button v-on:click="decrease(3, $event), inform()">-3</button>
+    <p>Status: {{ status }}</p>
   </div>
 
   <hr>
@@ -34,24 +41,30 @@ export default {
   data() {
     return {
       name: 'Tom',
-      counter: 0
+      counter: 0,
+      status: ''
     }
   },
 
   methods: {
-    increase(num = 2) {
+    increase(num = 2, event) {
       this.counter += num
-      console.log(this.counter)
+      console.log(event)
     },
 
-    decrease(num = 2) {
+    decrease(num = 2, event) {
       if (this.counter > 0) {
         this.counter -= num
       }
+      console.log(event)
     },
 
     logEvent(ev) {
       console.log(ev)
+    },
+
+    inform() {
+      this.status = "Время нажатия кнопки: " + new Date().toLocaleString();
     }
   }
 }
